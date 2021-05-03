@@ -21,11 +21,12 @@ end)
 Citizen.CreateThread(function()
     while true do
         local sleeptimer = 500
-        if GetDistanceBetweenCoords(GetEntityCoords(PlayerPedId()), cfg.pos, true) < 15 then
+        local dist = #(GetEntityCoords(PlayerPedId())-cfg.pos)
+        if dist < 15 then
             sleeptimer = 0
             DrawMarker(27, cfg.pos.x,cfg.pos.y,cfg.pos.z-0.99, 0, 0, 0, 0, 0, 0,  1.2,  1.2, 1.2, 173, 16, 10, 255, false, false, false, true)
-            if GetDistanceBetweenCoords(GetEntityCoords(PlayerPedId()), cfg.pos, true) < 1 then
-                DrawText3D(cfg.pos,"[~b~E~w~] Tilgå Bilforhandler.")
+            if dist < 1 then
+                alert("Tryk ~INPUT_CONTEXT~ for at åbne Bilforhandler.")
                 if IsControlJustPressed(1, 38) then
                     OpenShopMenu()
                 end
@@ -83,27 +84,11 @@ function round(num, numDecimalPlaces)
     return math.floor(num * mult + 0.5) / mult
 end
 
-function DrawText3D(coords, text)
-    local camCoords = GetGameplayCamCoord()
-    local dist = #(coords - camCoords)
-    
-    -- Experimental math to scale the text down
-    local scale = 200 / (GetGameplayCamFov() * dist)
 
-    SetTextColour(230, 230, 230, 255)
-    SetTextScale(0.35, 0.35)
-    SetTextFont(0)
-    SetTextDropshadow(0, 0, 0, 0, 55)
-    SetTextDropShadow()
-    SetTextCentre(1)
-
-    -- Diplay the text
-    BeginTextCommandDisplayText("STRING")
-    AddTextComponentSubstringPlayerName(text)
-    SetDrawOrigin(coords, 0)
-    EndTextCommandDisplayText(0.0, 0.0)
-    ClearDrawOrigin()
-
+function alert(msg) 
+    SetTextComponentFormat("STRING")
+    AddTextComponentString(msg)
+    DisplayHelpTextFromStringLabel(0, 0, 1, -1)
 end
 
 function spawnCar(model,coords,h,spawnIN)
