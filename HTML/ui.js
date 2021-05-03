@@ -1,7 +1,7 @@
 function CloseShop() {
     $("#wrapper").html('');
 	$("#shopmenu").hide();
-    $.post('http://vrp_vehicleshop/CloseMenu');
+    $.post('http://vRP_vehicleshop/CloseMenu');
 }
 
 
@@ -78,9 +78,9 @@ $(document).ready(function(){
         $("#wrapper").html('');
         
         if($(this).data('value') == "buy")
-            $.post('http://vrp_vehicleshop/BuyVehicle', JSON.stringify({model: $(this).data('model')}));
+            $.post('http://vRP_vehicleshop/BuyVehicle', JSON.stringify({model: $(this).data('model')}));
         else if($(this).data('value') == "test-drive")
-            $.post('http://vrp_vehicleshop/TestDrive', JSON.stringify({model: $(this).data('model')}));
+            $.post('http://vRP_vehicleshop/TestDrive', JSON.stringify({model: $(this).data('model')}));
     });
 
     $('#search').click(function() {
